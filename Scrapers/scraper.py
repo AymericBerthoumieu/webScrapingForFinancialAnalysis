@@ -8,9 +8,9 @@ class Scraper:
         # Chrome will be used to connect to Twitter
         self.driver = webdriver.Chrome('chromedriver.exe')
 
-    def connection(self):
+    def connection(self, url):
         """
         Open connection to a tweeter account.
         """
         # open the URL
-        self.driver.get(self._URL)
+        self.driver.get(url)
