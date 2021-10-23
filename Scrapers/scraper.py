@@ -7,11 +7,17 @@ from Utils.exceptions import NoSuchElementException, TimeoutException
 
 
 class Scraper:
+    # can depends on the internet connection. The lower the connection, the higher the pause time should be
+    _PAUSE_TIME = 1
     _URL = ""
 
     def __init__(self):
-        # Chrome will be used to connect to Twitter
-        self.driver = webdriver.Chrome('chromedriver.exe')
+        # disable notification
+        chrome_options = webdriver.ChromeOptions()
+        chrome_options.add_argument('disable-notifications')
+
+        # Chrome will be used to navigate
+        self.driver = webdriver.Chrome('chromedriver.exe', options=chrome_options)
 
     def connection(self, url):
         """
@@ -20,10 +26,11 @@ class Scraper:
         # open the URL
         self.driver.get(url)
 
-    def wait_to_find(self, by_variable, attribute):
+    def wait_to_find(self, by_variable, attribute, wait=20):
         """
         :param by_variable: variable to look for
         :param attribute: attribute of the variable
+        :param wait: waiting time
         Wait until the page is loaded to find the element required.
         Raise an exception in case the element is not found or if the program takes to much time
         """
