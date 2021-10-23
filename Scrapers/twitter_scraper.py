@@ -3,9 +3,8 @@ import datetime as dt
 from Scrapers.scraper import Scraper
 from collections.abc import Iterable
 from selenium.webdriver.common.by import By
+from Utils.exceptions import NotFoundException
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
-from Utils.exceptions import NoSuchElementException, TimeoutException, NotFoundException
 
 
 class TwitterScraper(Scraper):
@@ -19,19 +18,6 @@ class TwitterScraper(Scraper):
         super(TwitterScraper, self).__init__()
         self.username = username
         self.password = password
-
-    def wait_to_find(self, by_variable, attribute):
-        """
-        :param by_variable: variable to look for
-        :param attribute: attribute of the variable
-        Wait until the page is loaded to find the element required.
-        Raise an exception in case the element is not found or if the program takes to much time
-        """
-        try:
-            WebDriverWait(self.driver, 20).until(lambda x: x.find_element(by=by_variable, value=attribute))
-        except (NoSuchElementException, TimeoutException):
-            print(f'{by_variable} {attribute} have not been found in the web page.')
-            self.driver.quit()
 
     def connection_to_account(self):
         """
