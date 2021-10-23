@@ -1,7 +1,7 @@
 import time
-import pandas as pd
 import datetime as dt
 from Scrapers.scraper import Scraper
+from collections.abc import Iterable
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
@@ -9,9 +9,8 @@ from Utils.exceptions import NoSuchElementException, TimeoutException, NotFoundE
 
 
 class TwitterScraper(Scraper):
-    _URL = r"https:twitter.com/home"
-    _URL_EXPLORE = r"https:twitter.com/explore"
-    # can depends on the internet cnnection. The lower the connection, the higher the pause time should be
+    _URL = r"https:twitter.com/explore"
+    # can depends on the internet connection. The lower the connection, the higher the pause time should be
     _SCROLL_PAUSE_TIME = 1
     _CASH_TAG = "$"
     _HASH_TAG = "#"
@@ -127,7 +126,7 @@ class TwitterScraper(Scraper):
         return " ".join(res)
 
     @staticmethod
-    def formatted_tweets(tweets: list, ticker: str):
+    def formatted_tweets(tweets: Iterable, ticker: str):
         """
         :param tweets: list of tweets
         :param ticker: ticker of the company to get information about
@@ -192,28 +191,14 @@ class TwitterScraper(Scraper):
 
         return tweets
 
-    def get_info(self, tickers: list, start_date: dt.datetime, end_date: dt.datetime):
+    def get_info(self, tickers: Iterable, start_date: dt.datetime, end_date: dt.datetime):
         """
         :param tickers: list of tickers to get information about
         :param start_date: minimum date of interest
         :param end_date: maximum date of interest
         :return: formatted tweets about all tickers between start_date and end_date
         """
-        # connection to the explore page
-        self.connection(self._URL_EXPLORE)
-
-        # gather information on each ticker
-        tweets = list()
-        for ticker in tickers:
-            tweets += self.do_research(self._CASH_TAG + ticker, start_date)
-
-        # close driver
-        self.driver.quit()
-
-        tweets_df = pd.DataFrame(tweets)
-        tweets_df = tweets_df[start_date < tweets_df.date]
-        tweets_df = tweets_df[tweets_df.date < end_date]
-        return tweets_df
+        return super(TwitterScraper, self).get_info(map((lambda x: self._CASH_TAG + x), tickers), start_date, end_date)
 
 
 if __name__ == "__main__":
