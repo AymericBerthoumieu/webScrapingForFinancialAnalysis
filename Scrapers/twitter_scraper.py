@@ -9,8 +9,6 @@ from selenium.webdriver.common.keys import Keys
 
 class TwitterScraper(Scraper):
     _URL = r"https:twitter.com/explore"
-    # can depends on the internet connection. The lower the connection, the higher the pause time should be
-    _SCROLL_PAUSE_TIME = 1
     _CASH_TAG = "$"
     _HASH_TAG = "#"
 
@@ -51,7 +49,7 @@ class TwitterScraper(Scraper):
         return list of selenium element representing tweets
         """
         # wait to load page
-        time.sleep(self._SCROLL_PAUSE_TIME)
+        time.sleep(self._PAUSE_TIME)
 
         tweets = list()
 
@@ -71,7 +69,7 @@ class TwitterScraper(Scraper):
             # scroll down
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
             # wait to load page
-            time.sleep(self._SCROLL_PAUSE_TIME)
+            time.sleep(self._PAUSE_TIME)
             # calculate new scroll height and compare with last scroll height
             new_height = self.driver.execute_script("return document.body.scrollHeight")
 
