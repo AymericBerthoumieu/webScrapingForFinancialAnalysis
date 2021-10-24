@@ -206,4 +206,4 @@ if __name__ == '__main__':
     start_date = end_date - relativedelta.relativedelta(months=2)
 
     scraper = RedditScraper(subreddit)
-    res = scraper.get_info(tickers, start_date, end_date)
+    res = scraper.get(tickers, start_date, end_date)

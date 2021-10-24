@@ -1,8 +1,9 @@
-from selenium import webdriver
 import pandas as pd
 import datetime as dt
+from selenium import webdriver
 from collections.abc import Iterable
 from selenium.webdriver.support.ui import WebDriverWait
+
 from Utils.exceptions import NoSuchElementException, TimeoutException
 
 
@@ -49,7 +50,7 @@ class Scraper:
         """
         raise NotImplemented
 
-    def get_info(self, tickers: Iterable, start_date: dt.datetime, end_date: dt.datetime):
+    def get(self, tickers: Iterable, start_date: dt.datetime, end_date: dt.datetime):
         """
         :param tickers: list of tickers to get information about
         :param start_date: minimum date of interest

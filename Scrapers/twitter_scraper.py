@@ -175,14 +175,14 @@ class TwitterScraper(Scraper):
 
         return tweets
 
-    def get_info(self, tickers: Iterable, start_date: dt.datetime, end_date: dt.datetime):
+    def get(self, tickers: Iterable, start_date: dt.datetime, end_date: dt.datetime):
         """
         :param tickers: list of tickers to get information about
         :param start_date: minimum date of interest
         :param end_date: maximum date of interest
         :return: formatted tweets about all tickers between start_date and end_date
         """
-        return super(TwitterScraper, self).get_info(map((lambda x: self._CASH_TAG + x), tickers), start_date, end_date)
+        return super(TwitterScraper, self).get(map((lambda x: self._CASH_TAG + x), tickers), start_date, end_date)
 
 
 if __name__ == "__main__":
@@ -192,4 +192,4 @@ if __name__ == "__main__":
     start_date = end_date - dt.timedelta(hours=3)
 
     scraper = TwitterScraper()
-    res = scraper.get_info(tickers, start_date, end_date)
+    res = scraper.get(tickers, start_date, end_date)
