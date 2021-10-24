@@ -30,6 +30,12 @@ class RedditScraper(Scraper):
             date = now - relativedelta.relativedelta(months=int(n))
         elif freq in ('année', 'années', 'an', 'ans', 'year', 'years'):
             date = now - relativedelta.relativedelta(years=int(n))
+        elif freq in ('heure', 'heures', 'hours', 'hour'):
+            date = now - relativedelta.relativedelta(hours=int(n))
+        elif freq in ('minute', 'minutes'):
+            date = now - relativedelta.relativedelta(minutes=int(n))
+        elif freq in ('second', 'secondes', 'seconds'):
+            date = now - relativedelta.relativedelta(seconds=int(n))
         else:
             date = txt
         return date
