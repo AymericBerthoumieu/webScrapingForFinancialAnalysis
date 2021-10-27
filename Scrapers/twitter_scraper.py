@@ -1,14 +1,16 @@
 import time
+import getpass
+import numpy as np
 import datetime as dt
 from Scrapers.scraper import Scraper
 from collections.abc import Iterable
 from selenium.webdriver.common.by import By
-from Utils.exceptions import NotFoundException
 from selenium.webdriver.common.keys import Keys
 
 
 class TwitterScraper(Scraper):
-    _URL = r"https:twitter.com/explore"
+    _URL_EXPLORE = r"https:twitter.com/explore"
+    _URL = r"https:twitter.com/home"
     _CASH_TAG = "$"
     _HASH_TAG = "#"
 
@@ -17,15 +19,25 @@ class TwitterScraper(Scraper):
         self.username = username
         self.password = password
 
+    def connection(self, url):
+        """
+        Open connection.
+        """
+        # open the URL
+        self.driver.get(url)
+
+        # connect the profile to avoid to be disturbed
+        self.connection_to_account()
+
+        time.sleep(self._PAUSE_TIME)
+        # go to explore
+        self.driver.get(self._URL_EXPLORE)
+
     def connection_to_account(self):
         """
         Open connection to a tweeter account.
         """
-        self.connection(self._URL)
-
-        # wait until page has loaded
-        self.wait_to_find('name', "username")
-
+        self.wait_to_find('name', 'username')
         # get element for email and post the username
         email = self.driver.find_element(by='name', value='username')
         if self.username is None:
@@ -38,8 +50,21 @@ class TwitterScraper(Scraper):
         # get element for password and post the password
         password = self.driver.find_element(by='name', value='password')
         if self.password is None:
-            self.password = input("Please enter your Twitter e-mail address:")
+            self.password = getpass.getpass("Please enter your Twitter password:")
         password.send_keys(self.password, Keys.ENTER)
+
+    @staticmethod
+    def get_date(tweet):
+        """
+        :param tweet: selenium element representing a tweet
+        :return: date of the tweet
+        """
+        try:
+            date = dt.datetime.strptime(tweet.find_element_by_tag_name('time').get_attribute('datetime')[:-5],
+                                        "%Y-%m-%dT%H:%M:%S")
+        except:
+            date = np.nan
+        return date
 
     def get_tweets(self, start_date: dt.datetime, ticker: str):
         """
@@ -62,9 +87,7 @@ class TwitterScraper(Scraper):
             tweets += self.formatted_tweets(new_tweets, ticker)
 
             # get last date
-            last_date = dt.datetime.strptime(
-                new_tweets[-1].find_element_by_tag_name('time').get_attribute('datetime')[:-5],
-                "%Y-%m-%dT%H:%M:%S")
+            last_date = self.get_date(new_tweets[-1])
 
             # scroll down
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
@@ -129,8 +152,7 @@ class TwitterScraper(Scraper):
                 content = 'unknown'
 
             data.append({
-                "date": dt.datetime.strptime(tweet.find_element_by_tag_name('time').get_attribute('datetime')[:-5],
-                                             "%Y-%m-%dT%H:%M:%S"),
+                "date": TwitterScraper.get_date(tweet),
                 "ticker": ticker,
                 "source": "Twitter",
                 "account": account,
@@ -151,6 +173,8 @@ class TwitterScraper(Scraper):
 
         # do the search in search bar
         search_bar = self.driver.find_element_by_tag_name('input')
+
+        # if a connection is required
         search_bar.send_keys(Keys.CONTROL, "a")
         search_bar.send_keys(Keys.DELETE)
         search_bar.send_keys(ticker, Keys.ENTER)
@@ -160,17 +184,10 @@ class TwitterScraper(Scraper):
 
         # focus on most recent tweets
         a = self.driver.find_elements_by_tag_name("a")
-
-        i = 0
-        while i < len(a) and '=live' not in a[i].get_attribute('href'):
-            i += 1
-
-        if i == len(a):
-            raise NotFoundException("Could manage to find the 'recent' link.")
-        else:
-            a[i].click()
+        self.get_from_attribute_reverse(a, 'href', '=live').click()
 
         # get information from tweet
+        time.sleep(self._PAUSE_TIME)
         tweets = self.get_tweets(start_date, ticker)
 
         return tweets
@@ -186,7 +203,7 @@ class TwitterScraper(Scraper):
 
 
 if __name__ == "__main__":
-    tickers = ["AAPL", "FB"]
+    tickers = ["AAPL"]
     end_date = dt.datetime.now()
     # I have an offset of 2 hours between my time and twitter time
     start_date = end_date - dt.timedelta(hours=3)

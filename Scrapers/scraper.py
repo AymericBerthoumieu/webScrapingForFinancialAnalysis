@@ -3,8 +3,7 @@ import datetime as dt
 from selenium import webdriver
 from collections.abc import Iterable
 from selenium.webdriver.support.ui import WebDriverWait
-
-from Utils.exceptions import NoSuchElementException, TimeoutException
+from Utils.exceptions import NoSuchElementException, TimeoutException, NotFoundException
 
 
 class Scraper:
@@ -22,10 +21,57 @@ class Scraper:
 
     def connection(self, url):
         """
-        Open connection to a tweeter account.
+        Open connection.
         """
         # open the URL
         self.driver.get(url)
+
+    @staticmethod
+    def get_from_attribute(element, name: str, values: Iterable):
+        """
+        :param element: element in which the research will be done
+        :param name: name of the attribute
+        :param values: value of the attribute
+        :return: first element with attribute matching value
+        """
+        i = 0
+
+        if name != 'text':
+            while i < len(element) and (element[i].get_attribute(name) is None or element[i].get_attribute(
+                    name) not in values):
+                i += 1
+        else:
+            while i < len(element) and (element[i].text == "" or element[i].text not in values):
+                i += 1
+
+        if i == len(element):
+            raise NotFoundException(f"Element with attribute {name} in {values} not found.")
+        else:
+            found = element[i]
+        return found
+
+    @staticmethod
+    def get_from_attribute_reverse(element, name: str, value: Iterable):
+        """
+        :param element: element in which the research will be done
+        :param name: name of the attribute
+        :param value: value of the attribute
+        :return: first element with value in attribute
+        """
+        i = 0
+
+        if name != 'text':
+            while i < len(element) and value not in element[i].get_attribute(name):
+                i += 1
+        else:
+            while i < len(element) and value not in element[i].text:
+                i += 1
+
+        if i == len(element):
+            raise NotFoundException(f"Element with {value} in attribute {name} not found.")
+        else:
+            found = element[i]
+        return found
 
     def wait_to_find(self, by_variable, attribute, wait=20):
         """
@@ -36,7 +82,7 @@ class Scraper:
         Raise an exception in case the element is not found or if the program takes to much time
         """
         try:
-            WebDriverWait(self.driver, 20).until(lambda x: x.find_element(by=by_variable, value=attribute))
+            WebDriverWait(self.driver, wait).until(lambda x: x.find_element(by=by_variable, value=attribute))
         except (NoSuchElementException, TimeoutException):
             print(f'{by_variable} {attribute} have not been found in the web page.')
             self.driver.quit()
@@ -69,6 +115,7 @@ class Scraper:
         self.driver.quit()
 
         info_df = pd.DataFrame(info)
+        info_df.date = info_df.date.ffill()
         info_df = info_df[start_date < info_df.date]
         info_df = info_df[info_df.date < end_date]
         return info_df
