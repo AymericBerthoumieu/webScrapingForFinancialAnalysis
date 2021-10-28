@@ -1,11 +1,12 @@
-import time
-import getpass
-import numpy as np
-import datetime as dt
+from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.by import By
 from Scrapers.scraper import Scraper
 from collections.abc import Iterable
-from selenium.webdriver.common.by import By
-from selenium.webdriver.common.keys import Keys
+from Utils.decorators import time_elapsed
+import datetime as dt
+import numpy as np
+import getpass
+import time
 
 
 class TwitterScraper(Scraper):
@@ -109,11 +110,13 @@ class TwitterScraper(Scraper):
         :param tweet: selenium element representing a tweet
         :return: the account that has posted the tweet
         """
-        l = tweet.find_elements_by_tag_name('span')
-        i = 0
-        while i < len(l) and not '@' in l[i].text:
-            i += 1
-        return l[i].text
+        try:
+            span = tweet.find_elements_by_tag_name('span')
+            acc = TwitterScraper.get_from_attribute_reverse(span, 'text', '@')
+            res = acc.text
+        except:
+            res = ""
+        return res
 
     @staticmethod
     def get_text_content(tweet):
@@ -121,14 +124,17 @@ class TwitterScraper(Scraper):
         :param tweet: selenium element representing a tweet
         :return: the text content of the tweet. tag and link are to tricky to extract at the moment.
         """
-        res = list()
-        l = tweet.find_elements_by_tag_name('span')
-        i = 0
-        while i < len(l) and not '@' in l[i].text:
+        try:
+            res = list()
+            l = tweet.find_elements_by_tag_name('span')
+            i = 0
+            while i < len(l) and not '@' in l[i].text:
+                i += 1
             i += 1
-        i += 1
-        for j in range(i, len(l)):
-            res.append(l[j].text)
+            for j in range(i, len(l)):
+                res.append(l[j].text)
+        except:
+            res = list()
 
         return " ".join(res)
 
@@ -192,6 +198,7 @@ class TwitterScraper(Scraper):
 
         return tweets
 
+    @time_elapsed
     def get(self, tickers: Iterable, start_date: dt.datetime, end_date: dt.datetime):
         """
         :param tickers: list of tickers to get information about

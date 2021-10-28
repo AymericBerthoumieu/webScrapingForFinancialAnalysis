@@ -1,9 +1,10 @@
-import time
-import warnings
-import pandas as pd
-import datetime as dt
-from Scrapers.scraper import Scraper
 from collections.abc import Iterable
+from Scrapers.scraper import Scraper
+import datetime as dt
+import pandas as pd
+import warnings
+import time
+
 
 
 class YahooScraper(Scraper):
@@ -63,6 +64,7 @@ class YahooScraper(Scraper):
         data['ticker'] = ticker
         return data
 
+    @time_elapsed
     def get(self, tickers: Iterable, start_date: dt.datetime, end_date: dt.datetime):
         """
         :param tickers:

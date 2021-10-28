@@ -1,9 +1,10 @@
-import pandas as pd
-import datetime as dt
-from selenium import webdriver
-from collections.abc import Iterable
-from selenium.webdriver.support.ui import WebDriverWait
 from Utils.exceptions import NoSuchElementException, TimeoutException, NotFoundException
+from selenium.webdriver.support.ui import WebDriverWait
+from Utils.decorators import time_elapsed
+from collections.abc import Iterable
+from selenium import webdriver
+import datetime as dt
+import pandas as pd
 
 
 class Scraper:
@@ -96,6 +97,7 @@ class Scraper:
         """
         raise NotImplemented
 
+    @time_elapsed
     def get(self, tickers: Iterable, start_date: dt.datetime, end_date: dt.datetime):
         """
         :param tickers: list of tickers to get information about
