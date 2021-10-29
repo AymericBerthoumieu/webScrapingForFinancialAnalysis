@@ -1,20 +1,30 @@
 from Scrapers.abbreviations_scraper import AbbreviationsScraper
 from Utils.const import DICT_SMILEY, WORDS_TO_KEEP
 from Utils.decorators import time_elapsed
+from nltk.corpus import stopwords, wordnet
 from nltk.tokenize import word_tokenize
+from nltk.stem import WordNetLemmatizer
 from collections.abc import Iterable
-from nltk.corpus import stopwords
 import string
 import nltk
 import re
 
+
 nltk.download('punkt')
 nltk.download('stopwords')
+nltk.download('wordnet')
+nltk.download('averaged_perceptron_tagger')
 
 
 class DataCleaner:
 
-    def __init__(self):
+    def __init__(self, normalization: bool = False):
+        """
+        :param normalization: if normalization of the data has to be done
+        """
+        self.normalization = normalization
+        if normalization:
+            self.lemmatizer = WordNetLemmatizer()
         self.stop_words = stopwords.words('english')
         for w in WORDS_TO_KEEP:
             self.stop_words.remove(w)
@@ -93,6 +103,34 @@ class DataCleaner:
         reformed_text = " ".join(text_with_no_stop_words)
         return reformed_text
 
+    @staticmethod
+    def get_wordnet_pos(word):
+        """
+        :param word: word to work on
+        :return: Map POS tag to first character lemmatize() accepts
+        """
+        tag = nltk.pos_tag([word])[0][1][0].upper()
+        tag_dict = {
+            "J": wordnet.ADJ,
+            "N": wordnet.NOUN,
+            "V": wordnet.VERB,
+            "R": wordnet.ADV
+        }
+        return tag_dict.get(tag, wordnet.NOUN)
+
+    def lemmatize_sentence(self, sentence: str):
+        """
+        :param sentence: sentence that has to be lemmatize
+        :return:
+        """
+        token_words = word_tokenize(sentence)
+        lemmatized_sentence = []
+        for word in token_words:
+            lemmatized_sentence.append(self.lemmatizer.lemmatize(word, self.get_wordnet_pos(word)))
+        lemmatized_sentence.append(" ")
+
+        return "".join(lemmatized_sentence)
+
     @time_elapsed
     def run(self, text: str, avoid: Iterable = ()):
         """
@@ -106,9 +144,13 @@ class DataCleaner:
         text = self.remove_smiley(text)
         text = self.remove_noise(text)
         text = self.remove_stop_words(text)
+
+        if self.normalization:
+            text = self.lemmatize_sentence(text)
+
         return text
 
 
 if __name__ == '__main__':
-    cleaner = DataCleaner()
+    cleaner = DataCleaner(normalization=True)
     res = cleaner.run('gg non btw sell ;) <3')

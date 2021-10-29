@@ -190,7 +190,7 @@ class RedditScraper(Scraper):
 
 if __name__ == '__main__':
     subreddit = "wallstreetbets"
-    tickers = ['TSLA']
+    tickers = ['META']
     end_date = dt.datetime.now()
     start_date = end_date - relativedelta.relativedelta(days=1)
 

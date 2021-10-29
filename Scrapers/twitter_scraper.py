@@ -1,8 +1,8 @@
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
-from Scrapers.scraper import Scraper
-from collections.abc import Iterable
 from Utils.decorators import time_elapsed
+from collections.abc import Iterable
+from Scrapers.scraper import Scraper
 import datetime as dt
 import numpy as np
 import getpass
@@ -46,6 +46,13 @@ class TwitterScraper(Scraper):
         email.send_keys(self.username, Keys.ENTER)
 
         # wait for the page to actualise
+        self.wait_to_find(By.TAG_NAME, 'input')
+        input_field = self.driver.find_element(by=By.TAG_NAME, value='input')
+        if input_field.get_attribute('name') != 'password':
+            print('Your behaviour triggered Twitter security, please enter your phone number in the browser.')
+            time.sleep(self._PAUSE_TIME)
+
+        # wait for the page to actualise
         self.wait_to_find('name', "password")
 
         # get element for password and post the password
@@ -54,17 +61,22 @@ class TwitterScraper(Scraper):
             self.password = getpass.getpass("Please enter your Twitter password:")
         password.send_keys(self.password, Keys.ENTER)
 
-    @staticmethod
-    def get_date(tweet):
+    def get_date(self, tweet):
         """
         :param tweet: selenium element representing a tweet
         :return: date of the tweet
         """
         try:
+            self.wait_to_find(By.TAG_NAME, 'time')
             date = dt.datetime.strptime(tweet.find_element_by_tag_name('time').get_attribute('datetime')[:-5],
                                         "%Y-%m-%dT%H:%M:%S")
         except:
-            date = np.nan
+            try:  # very long internet connection
+                time.sleep(self._PAUSE_TIME + 3)
+                date = dt.datetime.strptime(tweet.find_element_by_tag_name('time').get_attribute('datetime')[:-5],
+                                            "%Y-%m-%dT%H:%M:%S")
+            except:
+                date = np.nan
         return date
 
     def get_tweets(self, start_date: dt.datetime, ticker: str):
@@ -138,8 +150,7 @@ class TwitterScraper(Scraper):
 
         return " ".join(res)
 
-    @staticmethod
-    def formatted_tweets(tweets: Iterable, ticker: str):
+    def formatted_tweets(self, tweets: Iterable, ticker: str):
         """
         :param tweets: list of tweets
         :param ticker: ticker of the company to get information about
@@ -148,17 +159,17 @@ class TwitterScraper(Scraper):
         data = list()
         for tweet in tweets:
             try:
-                account = TwitterScraper.get_account_name(tweet)
+                account = self.get_account_name(tweet)
             except:
                 account = 'unknown'
 
             try:
-                content = TwitterScraper.get_text_content(tweet)
+                content = self.get_text_content(tweet)
             except:
                 content = 'unknown'
 
             data.append({
-                "date": TwitterScraper.get_date(tweet),
+                "date": self.get_date(tweet),
                 "ticker": ticker,
                 "source": "Twitter",
                 "account": account,
