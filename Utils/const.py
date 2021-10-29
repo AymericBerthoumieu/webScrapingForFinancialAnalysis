@@ -70,3 +70,32 @@ WORDS_TO_KEEP = ["don", "don't", "ain", "aren", "aren't", "couldn", "couldn't", 
                  "hadn", "hadn't", "hasn", "hasn't", "haven", "haven't", "isn", "isn't", "ma", "mightn", "mightn't",
                  "mustn", "mustn't", "needn", "needn't", "shan", "shan't", "no", "nor", "not", "shouldn", "shouldn't",
                  "wasn", "wasn't", "weren", "weren't", "won", "won't", "wouldn", "wouldn't"]
+
+POSITIVE_WORDS = {'smiley', 'buy', 'playful', 'cool', 'love', 'long', 'gain', 'earn', 'joy', 'happy', 'win', 'up',
+                  'super', 'bull', 'positive', 'good', 'shine', 'rock', 'great', 'able', 'appreciate', 'accomplish',
+                  'attractive', 'ambitious', 'amazing', 'awesome', 'bold', 'bright', 'brilliant', 'capable',
+                  'enthusiastic', 'enthusiast', 'eager', 'efficient', 'excellent', 'exciting', 'excited', 'fabulous',
+                  'flourish', 'flourishing', 'bullish', 'fantastic', 'genius', 'hope', 'hopefully', 'hopeful', 'ideal',
+                  'innovative', 'interesting', 'intelligent', 'clever', 'inspiration', 'inspirational', 'improved'
+                  'impressive', 'legendary', 'Magnificent', 'Marvelous', 'Memorable', 'Motivating', 'motivation',
+                  'motivated', 'miracle', 'masterpiece', 'neat', 'nice', 'nicely', 'optimistic', 'optimist', 'optimism'
+                  'perfect', 'powerful', 'power', 'pleasing', 'quality', 'qualities', 'qualified', 'qualify',
+                  'resilient', 'respect', 'reliable', 'reward', 'robust', 'smart', 'safe', 'satisfaction',
+                  'satisfactory', 'secure', 'skill', 'skilled', 'skillful', 'success', 'successful', 'superb', 'top',
+                  'tops', 'valuable', 'valued', 'well', 'honest', 'honorable', 'more'}
+
+NEGATIVE_WORDS = {'sad', 'worried', 'sell', 'short', 'crying', 'loose', 'lost', 'losses', 'pain', 'scared', 'scary'
+                  'horrible', 'bear', 'bearish', 'negative', 'bad', 'adverse', 'angry', 'annoy', 'anxious', 'awful',
+                  'boring', 'broken', "can't", 'criminal', 'corrupt', 'case', 'collapse', 'crazy', 'cruel', 'damage',
+                  'damaging', 'damaged', 'dead', 'disaster', 'decaying', 'deplorable', 'depressed', 'deprived',
+                  'deprive', 'detrimental', 'dirty', 'disgusting', 'dishonest', 'dishonorable', 'distress', 'evil',
+                  'fail', 'fear', 'faulty', 'fight', 'grave', 'default', 'hard', 'hate', 'harm', 'harmful', 'danger',
+                  'dangerous', 'hostile', 'hurt', 'ill', 'impossible', 'insane', 'junk', 'messy', 'miss', 'missing',
+                  'never', 'nonsense', 'old', 'offencive', 'pain', 'perturb', 'perturbation', 'pessimist',
+                  'pessimistic', 'pessimism', 'petty', 'poor', 'quit', 'reject', 'repellent', 'repulsive', 'rotten',
+                  'rude', 'savage', 'severe', 'scream', 'screaming', 'shock', 'shocking', 'krach', 'sinister', 'stick',
+                  'stress', 'stressful', 'stuck', 'stupid', 'substandard', 'court', 'terrible', 'terrifying',
+                  'threatening', 'ugly', 'unfair', 'unfavorable', 'unhappy', 'unhealthy', 'unjust', 'unlucky',
+                  'unpleasant', 'unsatisfactory', 'unsatisfactory', 'less', 'unwanted', 'unwelcome', 'unwholesome',
+                  'unwieldy', 'unwise', 'upset', 'vice', 'vicious', 'vile', 'villainous', 'vindictive', 'weak',
+                  'worthless'}
