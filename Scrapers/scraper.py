@@ -18,7 +18,7 @@ class Scraper:
         chrome_options.add_argument('disable-notifications')
 
         # Chrome will be used to navigate
-        self.driver = webdriver.Chrome('chromedriver.exe', options=chrome_options)
+        self.driver = webdriver.Chrome('../Utils/chromedriver.exe', options=chrome_options)
 
     def connection(self, url):
         """

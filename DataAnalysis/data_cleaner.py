@@ -18,13 +18,9 @@ nltk.download('averaged_perceptron_tagger')
 
 class DataCleaner:
 
-    def __init__(self, normalization: bool = False):
-        """
-        :param normalization: if normalization of the data has to be done
-        """
-        self.normalization = normalization
-        if normalization:
-            self.lemmatizer = WordNetLemmatizer()
+    def __init__(self):
+        self.abbreviation_translator = AbbreviationsScraper(begin=2, end=26, lower=True).get().set_index('abbreviation')
+        self.lemmatizer = WordNetLemmatizer()
         self.stop_words = stopwords.words('english')
         for w in WORDS_TO_KEEP:
             self.stop_words.remove(w)
@@ -59,15 +55,14 @@ class DataCleaner:
                 words[i] = translator[words[i]]
         return words
 
-    @staticmethod
-    def remove_abbreviations(text: str, avoid: Iterable = ()):
+    def remove_abbreviations(self, text: str, avoid: Iterable = ()):
         """
         :param text: text to clean
         :param avoid: abbreviation that should not be translated
         :return: abbreviation replaced by full words
         """
         words = text.split(" ")
-        translation = AbbreviationsScraper(begin=2, end=26, lower=True).get().set_index('abbreviation')
+        translation = self.abbreviation_translator
         return " ".join(DataCleaner.words_translation(words, translation.to_dict()['explanation'], avoid))
 
     @staticmethod
@@ -131,7 +126,6 @@ class DataCleaner:
 
         return "".join(lemmatized_sentence)
 
-    @time_elapsed
     def run(self, text: str, avoid: Iterable = ()):
         """
         :param text: text to clean
@@ -144,13 +138,11 @@ class DataCleaner:
         text = self.remove_smiley(text)
         text = self.remove_noise(text)
         text = self.remove_stop_words(text)
-
-        if self.normalization:
-            text = self.lemmatize_sentence(text)
+        text = self.lemmatize_sentence(text)
 
         return text
 
 
 if __name__ == '__main__':
-    cleaner = DataCleaner(normalization=True)
-    res = cleaner.run('gg non btw sell ;) <3')
+    cleaner = DataCleaner()
+    res = cleaner.run('gg mate, btw sell ;) <3')
