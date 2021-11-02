@@ -221,10 +221,13 @@ class TwitterScraper(Scraper):
 
 
 if __name__ == "__main__":
-    tickers = ["AAPL"]
+    from Utils.const import TICKER_INFLUENCE
+    from dateutil import relativedelta
+
+    tickers = TICKER_INFLUENCE
     end_date = dt.datetime.now()
     # I have an offset of 2 hours between my time and twitter time
-    start_date = end_date - dt.timedelta(hours=3)
+    start_date = end_date - relativedelta.relativedelta(months=6)
 
     scraper = TwitterScraper()
     res = scraper.get(tickers, start_date, end_date)

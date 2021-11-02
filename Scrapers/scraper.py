@@ -111,7 +111,10 @@ class Scraper:
         # gather information on each ticker
         info = list()
         for ticker in tickers:
-            info += self.do_research(ticker, start_date)
+            try:
+                info += self.do_research(ticker, start_date)
+            except:
+                pass
 
         # close driver
         self.driver.quit()

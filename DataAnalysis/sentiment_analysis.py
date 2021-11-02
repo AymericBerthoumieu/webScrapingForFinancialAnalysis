@@ -76,25 +76,7 @@ class SentimentAnalysis:
 
 
 if __name__ == '__main__':
-    # from DataAnalysis.data_cleaner import DataCleaner
-    # from Scrapers.reddit_scraper import RedditScraper
-    # from dateutil import relativedelta
-    # import datetime as dt
-    #
-    # # data
-    # subreddit = "wallstreetbets"
-    # tickers = ['AAPL']
-    # end_date = dt.datetime.now()
-    # start_date = end_date - relativedelta.relativedelta(years=1)
-    # scraper = RedditScraper(subreddit)
-    # posts = scraper.get(tickers, start_date, end_date)
-    # posts['full'] = posts['title'] + ' ' + posts['text_content']
-    #
-    # # cleaning
     path = "../Utils/old_reddit_posts.csv"
-    # cleaner = DataCleaner()
-    # posts['lemmatized_text'] = posts['full'].apply(lambda x: cleaner.run(x))
-    # posts.to_csv(path)
     posts = pd.read_csv(path, index_col=0)
 
     # sentiment analysis

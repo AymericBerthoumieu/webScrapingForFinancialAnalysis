@@ -1,10 +1,10 @@
+from Utils.decorators import time_elapsed
 from collections.abc import Iterable
 from Scrapers.scraper import Scraper
 import datetime as dt
 import pandas as pd
 import warnings
 import time
-
 
 
 class YahooScraper(Scraper):
@@ -85,9 +85,11 @@ class YahooScraper(Scraper):
 
 
 if __name__ == '__main__':
-    tickers = ['AAPL', 'SPX', 'FB']
-    start_date = dt.datetime(2020, 12, 1)
-    end_date = dt.datetime(2021, 4, 1)
+    from dateutil import relativedelta
+
+    tickers = ['^NDX']
+    end_date = dt.datetime.now() - dt.timedelta(days=1)
+    start_date = end_date - relativedelta.relativedelta(months=6)
 
     scraper = YahooScraper()
     res = scraper.get(tickers, start_date, end_date)

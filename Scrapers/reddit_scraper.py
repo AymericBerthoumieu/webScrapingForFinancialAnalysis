@@ -130,7 +130,7 @@ class RedditScraper(Scraper):
             # scroll down
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
             # wait to load page
-            time.sleep(self._PAUSE_TIME)
+            time.sleep(self._PAUSE_TIME + 1)
             # calculate new scroll height and compare with last scroll height
             new_height = self.driver.execute_script("return document.body.scrollHeight")
 
@@ -189,10 +189,14 @@ class RedditScraper(Scraper):
 
 
 if __name__ == '__main__':
+    from Utils.const import TICKER_INFLUENCE
+    from dateutil import relativedelta
+
+    tickers = TICKER_INFLUENCE
     subreddit = "wallstreetbets"
-    tickers = ['META']
     end_date = dt.datetime.now()
-    start_date = end_date - relativedelta.relativedelta(days=1)
+    start_date = end_date - relativedelta.relativedelta(months=3)
 
     scraper = RedditScraper(subreddit)
     res = scraper.get(tickers, start_date, end_date)
+    res.to_csv('../Utils/old_reddit_posts.csv')

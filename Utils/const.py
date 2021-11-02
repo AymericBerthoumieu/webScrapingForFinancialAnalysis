@@ -77,15 +77,18 @@ POSITIVE_WORDS = {'smiley', 'buy', 'playful', 'cool', 'love', 'long', 'gain', 'e
                   'enthusiastic', 'enthusiast', 'eager', 'efficient', 'excellent', 'exciting', 'excited', 'fabulous',
                   'flourish', 'flourishing', 'bullish', 'fantastic', 'genius', 'hope', 'hopefully', 'hopeful', 'ideal',
                   'innovative', 'interesting', 'intelligent', 'clever', 'inspiration', 'inspirational', 'improved'
-                  'impressive', 'legendary', 'Magnificent', 'Marvelous', 'Memorable', 'Motivating', 'motivation',
+                                                                                                        'impressive',
+                  'legendary', 'Magnificent', 'Marvelous', 'Memorable', 'Motivating', 'motivation',
                   'motivated', 'miracle', 'masterpiece', 'neat', 'nice', 'nicely', 'optimistic', 'optimist', 'optimism'
-                  'perfect', 'powerful', 'power', 'pleasing', 'quality', 'qualities', 'qualified', 'qualify',
+                                                                                                             'perfect',
+                  'powerful', 'power', 'pleasing', 'quality', 'qualities', 'qualified', 'qualify',
                   'resilient', 'respect', 'reliable', 'reward', 'robust', 'smart', 'safe', 'satisfaction',
                   'satisfactory', 'secure', 'skill', 'skilled', 'skillful', 'success', 'successful', 'superb', 'top',
                   'tops', 'valuable', 'valued', 'well', 'honest', 'honorable', 'more'}
 
 NEGATIVE_WORDS = {'sad', 'worried', 'sell', 'short', 'crying', 'loose', 'lost', 'losses', 'pain', 'scared', 'scary'
-                  'horrible', 'bear', 'bearish', 'negative', 'bad', 'adverse', 'angry', 'annoy', 'anxious', 'awful',
+                                                                                                            'horrible',
+                  'bear', 'bearish', 'negative', 'bad', 'adverse', 'angry', 'annoy', 'anxious', 'awful',
                   'boring', 'broken', "can't", 'criminal', 'corrupt', 'case', 'collapse', 'crazy', 'cruel', 'damage',
                   'damaging', 'damaged', 'dead', 'disaster', 'decaying', 'deplorable', 'depressed', 'deprived',
                   'deprive', 'detrimental', 'dirty', 'disgusting', 'dishonest', 'dishonorable', 'distress', 'evil',
@@ -99,3 +102,6 @@ NEGATIVE_WORDS = {'sad', 'worried', 'sell', 'short', 'crying', 'loose', 'lost', 
                   'unpleasant', 'unsatisfactory', 'unsatisfactory', 'less', 'unwanted', 'unwelcome', 'unwholesome',
                   'unwieldy', 'unwise', 'upset', 'vice', 'vicious', 'vile', 'villainous', 'vindictive', 'weak',
                   'worthless'}
+
+TICKER_INFLUENCE = ['AAPL', 'FB', 'META', 'GOOGL', 'AMZN', 'MSFT', 'TSLA', 'NVDA', 'NFLX']
+# , 'PYPL', 'INTC', 'TXN', 'ASML'

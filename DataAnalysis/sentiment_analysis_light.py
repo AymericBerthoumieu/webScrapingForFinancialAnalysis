@@ -37,4 +37,4 @@ if __name__ == '__main__':
 
     # sentiment analysis
     sent_ana = SentimentAnalysisLight()
-    res = sent_ana.predict(posts['lemmatized_text'])
+    res = sent_ana.predict(posts['full'])

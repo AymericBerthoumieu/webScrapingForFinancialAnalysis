@@ -9,7 +9,6 @@ import string
 import nltk
 import re
 
-
 nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
@@ -18,9 +17,11 @@ nltk.download('averaged_perceptron_tagger')
 
 class DataCleaner:
 
-    def __init__(self):
+    def __init__(self, normalization: bool = False):
+        self.normalization = normalization
         self.abbreviation_translator = AbbreviationsScraper(begin=2, end=26, lower=True).get().set_index('abbreviation')
-        self.lemmatizer = WordNetLemmatizer()
+        if self.normalization:
+            self.lemmatizer = WordNetLemmatizer()
         self.stop_words = stopwords.words('english')
         for w in WORDS_TO_KEEP:
             self.stop_words.remove(w)
@@ -138,7 +139,8 @@ class DataCleaner:
         text = self.remove_smiley(text)
         text = self.remove_noise(text)
         text = self.remove_stop_words(text)
-        text = self.lemmatize_sentence(text)
+        if self.normalization:
+            text = self.lemmatize_sentence(text)
 
         return text
 
