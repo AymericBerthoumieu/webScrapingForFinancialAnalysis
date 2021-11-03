@@ -1,7 +1,6 @@
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from Scrapers.scraper import Scraper
-from dateutil import relativedelta
 import datetime as dt
 from lxml import html
 import numpy as np
@@ -175,6 +174,9 @@ class RedditScraper(Scraper):
 
         # ... by new
         self.get_from_attribute(self.driver.find_elements_by_tag_name("button"), 'text', ('New')).click()
+
+        # wait
+        time.sleep(self._PAUSE_TIME)
 
     def do_research(self, ticker: str, start_date: dt.datetime):
         """
