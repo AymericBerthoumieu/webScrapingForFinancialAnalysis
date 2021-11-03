@@ -53,15 +53,16 @@ def main(reference: str, influencers: Iterable):
     corr_analyser = SentimentReturnCorrelation(correlation_method='sign')
     correlation_sign = corr_analyser.run(posts, levels)
     corr_analyser.set_correlation_method('pearson')
-    correlation_pearson = corr_analyser.run(posts, levels)
+    correlation_pearson = corr_analyser.run(posts, levels).iloc[0, 1]  # only takes one factor
 
     return correlation_pearson, correlation_sign
 
 
 if __name__ == '__main__':
     from Utils.const import TICKERS_INFLUENCE
+
     reference = '^NDX'
     influencers = TICKERS_INFLUENCE
 
-    corr_sign, corr_pearson = main(reference, influencers)
+    corr_pearson, corr_sign = main(reference, influencers)
     print(corr_sign, corr_pearson)
