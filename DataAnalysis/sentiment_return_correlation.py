@@ -35,7 +35,10 @@ CORRELATION_METHODS = {
 class SentimentReturnCorrelation:
 
     def __init__(self, correlation_method: str = 'sign'):
-        self.correlation_method = CORRELATION_METHODS[correlation_method]
+        """
+        :param correlation_method: method used to compute the correlation
+        """
+        self._correlation_method = CORRELATION_METHODS[correlation_method]
 
     @staticmethod
     def score_by_day(df_scores: pd.DataFrame):
@@ -54,7 +57,7 @@ class SentimentReturnCorrelation:
 
         # weighted score by day
         df_scores['day'] = df_scores.index.day
-        df_scores[ 'month'] = df_scores.index.month
+        df_scores['month'] = df_scores.index.month
         df_scores['year'] = df_scores.index.year
 
         df_scores_daily = df_scores.groupby(['year', 'month', 'day']).sum()
@@ -80,7 +83,13 @@ class SentimentReturnCorrelation:
         # get daily returns
         df_scores_returns['returns'] = df_level['Close'].pct_change().shift(-1)
 
-        return self.correlation_method(df_scores_returns.dropna())
+        return self._correlation_method(df_scores_returns.dropna())
+
+    def set_correlation_method(self, correlation_method: str):
+        """
+        :param correlation_method: method used to compute the correlation
+        """
+        self._correlation_method = CORRELATION_METHODS[correlation_method]
 
 
 if __name__ == '__main__':

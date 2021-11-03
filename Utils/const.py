@@ -76,25 +76,22 @@ POSITIVE_WORDS = {'smiley', 'buy', 'playful', 'cool', 'love', 'long', 'gain', 'e
                   'attractive', 'ambitious', 'amazing', 'awesome', 'bold', 'bright', 'brilliant', 'capable',
                   'enthusiastic', 'enthusiast', 'eager', 'efficient', 'excellent', 'exciting', 'excited', 'fabulous',
                   'flourish', 'flourishing', 'bullish', 'fantastic', 'genius', 'hope', 'hopefully', 'hopeful', 'ideal',
-                  'innovative', 'interesting', 'intelligent', 'clever', 'inspiration', 'inspirational', 'improved'
-                                                                                                        'impressive',
-                  'legendary', 'Magnificent', 'Marvelous', 'Memorable', 'Motivating', 'motivation',
-                  'motivated', 'miracle', 'masterpiece', 'neat', 'nice', 'nicely', 'optimistic', 'optimist', 'optimism'
-                                                                                                             'perfect',
-                  'powerful', 'power', 'pleasing', 'quality', 'qualities', 'qualified', 'qualify',
+                  'innovative', 'interesting', 'intelligent', 'clever', 'inspiration', 'inspirational', 'improved'      
+                  'legendary', 'Magnificent', 'Marvelous', 'Memorable', 'Motivating', 'motivation', 'impressive',
+                  'motivated', 'miracle', 'masterpiece', 'neat', 'nice', 'nicely', 'optimistic', 'optimist', 'optimism'                
+                  'powerful', 'power', 'pleasing', 'quality', 'qualities', 'qualified', 'qualify', 'perfect',
                   'resilient', 'respect', 'reliable', 'reward', 'robust', 'smart', 'safe', 'satisfaction',
                   'satisfactory', 'secure', 'skill', 'skilled', 'skillful', 'success', 'successful', 'superb', 'top',
                   'tops', 'valuable', 'valued', 'well', 'honest', 'honorable', 'more'}
 
 NEGATIVE_WORDS = {'sad', 'worried', 'sell', 'short', 'crying', 'loose', 'lost', 'losses', 'pain', 'scared', 'scary'
-                                                                                                            'horrible',
-                  'bear', 'bearish', 'negative', 'bad', 'adverse', 'angry', 'annoy', 'anxious', 'awful',
+                  'bear', 'bearish', 'negative', 'bad', 'adverse', 'angry', 'annoy', 'anxious', 'awful', 'horrible',
                   'boring', 'broken', "can't", 'criminal', 'corrupt', 'case', 'collapse', 'crazy', 'cruel', 'damage',
                   'damaging', 'damaged', 'dead', 'disaster', 'decaying', 'deplorable', 'depressed', 'deprived',
                   'deprive', 'detrimental', 'dirty', 'disgusting', 'dishonest', 'dishonorable', 'distress', 'evil',
                   'fail', 'fear', 'faulty', 'fight', 'grave', 'default', 'hard', 'hate', 'harm', 'harmful', 'danger',
                   'dangerous', 'hostile', 'hurt', 'ill', 'impossible', 'insane', 'junk', 'messy', 'miss', 'missing',
-                  'never', 'nonsense', 'old', 'offencive', 'pain', 'perturb', 'perturbation', 'pessimist',
+                  'never', 'nonsense', 'old', 'offencive', 'pain', 'perturb', 'perturbation', 'pessimist', 'horrible',
                   'pessimistic', 'pessimism', 'petty', 'poor', 'quit', 'reject', 'repellent', 'repulsive', 'rotten',
                   'rude', 'savage', 'severe', 'scream', 'screaming', 'shock', 'shocking', 'krach', 'sinister', 'stick',
                   'stress', 'stressful', 'stuck', 'stupid', 'substandard', 'court', 'terrible', 'terrifying',
@@ -103,5 +100,7 @@ NEGATIVE_WORDS = {'sad', 'worried', 'sell', 'short', 'crying', 'loose', 'lost', 
                   'unwieldy', 'unwise', 'upset', 'vice', 'vicious', 'vile', 'villainous', 'vindictive', 'weak',
                   'worthless'}
 
-TICKER_INFLUENCE = ['AAPL', 'FB', 'META', 'GOOGL', 'AMZN', 'MSFT', 'TSLA', 'NVDA', 'NFLX']
-# , 'PYPL', 'INTC', 'TXN', 'ASML'
+TICKERS_INFLUENCE = ['AAPL', 'FB', 'META', 'GOOGL', 'AMZN', 'MSFT', 'TSLA', 'NVDA', 'NFLX']
+
+SUBREDDITS = ['wallstreetbets', 'investing']
+

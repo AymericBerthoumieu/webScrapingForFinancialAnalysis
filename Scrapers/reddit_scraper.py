@@ -83,23 +83,37 @@ class RedditScraper(Scraper):
                 pass
         return score
 
-    def formatted_posts(self, posts, ticker):
+    def formatted_posts(self, posts, ticker: str, start_date: dt.datetime):
         """
         :param posts: list of posts
         :param ticker: ticker of the company to get information about
+        :param start_date: lower bound of the dates
         :return: data extracted from the tweets organised into a list of dictionaries
         """
         data = list()
         for post in posts:
-            data.append({
-                "date": self.get_date(post),
-                "ticker": ticker,
-                "source": "Reddit/r/" + self.subreddit,
-                "score": self.get_score(post),
-                "account": post.find_element_by_class_name('_2tbHP6ZydRpjI44J3syuqC').text,
-                "title": post.find_element_by_tag_name('h3').text,
-                "text_content": self.get_body(post),
-            })
+            date = self.get_date(post)
+            if isinstance(date, dt.datetime) and date > start_date:
+                data.append({
+                    "date": date,
+                    "ticker": ticker,
+                    "source": "Reddit/r/" + self.subreddit,
+                    "score": self.get_score(post),
+                    "account": post.find_element_by_class_name('_2tbHP6ZydRpjI44J3syuqC').text,
+                    "title": post.find_element_by_tag_name('h3').text,
+                    "text_content": self.get_body(post),
+                })
+            else:
+                # not interesting in that case
+                data.append({
+                    "date": date,
+                    "ticker": ticker,
+                    "source": "Reddit/r/" + self.subreddit,
+                    "score": np.nan,
+                    "account": np.nan,
+                    "title": np.nan,
+                    "text_content": np.nan,
+                })
 
         return data
 
@@ -140,7 +154,7 @@ class RedditScraper(Scraper):
             last_height = new_height
 
         new_posts = self.driver.find_elements_by_class_name('_1oQyIsiPHYt6nx7VOmd1sz')
-        posts += self.formatted_posts(new_posts, ticker)
+        posts += self.formatted_posts(new_posts, ticker, start_date)
 
         return posts
 
