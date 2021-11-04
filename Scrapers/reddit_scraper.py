@@ -1,6 +1,7 @@
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 from Scrapers.scraper import Scraper
+from dateutil import relativedelta
 import datetime as dt
 from lxml import html
 import numpy as np
@@ -10,6 +11,7 @@ import time
 
 class RedditScraper(Scraper):
     _URL = r"https://www.reddit.com/r/"
+    _PAUSE_TIME = 3  # I take a long time for slow internet connection or slow browsers
 
     def __init__(self, subreddit: str, headers: dict = {'User-Agent': 'Mozilla/5.0'}):
         super(RedditScraper, self).__init__()
@@ -143,7 +145,7 @@ class RedditScraper(Scraper):
             # scroll down
             self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
             # wait to load page
-            time.sleep(self._PAUSE_TIME + 1)
+            time.sleep(self._PAUSE_TIME)
             # calculate new scroll height and compare with last scroll height
             new_height = self.driver.execute_script("return document.body.scrollHeight")
 
@@ -205,10 +207,10 @@ class RedditScraper(Scraper):
 
 
 if __name__ == '__main__':
-    from Utils.const import TICKER_INFLUENCE
+    from Utils.const import TICKERS_INFLUENCE
     from dateutil import relativedelta
 
-    tickers = TICKER_INFLUENCE
+    tickers = TICKERS_INFLUENCE
     subreddit = "wallstreetbets"
     end_date = dt.datetime.now()
     start_date = end_date - relativedelta.relativedelta(months=3)
