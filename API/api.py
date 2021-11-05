@@ -39,7 +39,7 @@ class Correlation_direct(Resource):
 
 app = Flask("Sentiment Correlation Scrapper")
 api = Api(app)
-api.add_resource(Correlation, '/correlation')
+api.add_resource(Correlation, '/replay')
 api.add_resource(Correlation_direct, '/correlation_live')
 
 if __name__ == "__main__":
