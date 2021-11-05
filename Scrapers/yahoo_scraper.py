@@ -67,10 +67,10 @@ class YahooScraper(Scraper):
     @time_elapsed
     def get(self, tickers: Iterable, start_date: dt.datetime, end_date: dt.datetime):
         """
-        :param tickers:
-        :param start_date:
-        :param end_date:
-        :return:
+        :param tickers: stocks ticker
+        :param start_date: lower bound of interest
+        :param end_date: upper bound of interest
+        :return: levels of stocks
         """
         res = pd.DataFrame()
 
