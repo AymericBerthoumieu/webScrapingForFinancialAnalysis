@@ -1,13 +1,11 @@
 from API.pipeline import pipeline_from_csv, pipeline_direct
 from flask_restful import Resource, Api, reqparse
 from flask import Flask
-import pandas as pd
 
 
 class Correlation(Resource):
 
     def get(self):
-        parser = reqparse.RequestParser()
 
         corr_pearson, corr_sign = pipeline_from_csv()
 
@@ -18,7 +16,7 @@ class Correlation(Resource):
         return dict_return, 200
 
 
-class Correlation_direct(Resource):
+class CorrelationDirect(Resource):
 
     def get(self):
         parser = reqparse.RequestParser()
@@ -40,7 +38,7 @@ class Correlation_direct(Resource):
 app = Flask("Sentiment Correlation Scrapper")
 api = Api(app)
 api.add_resource(Correlation, '/replay')
-api.add_resource(Correlation_direct, '/correlation_live')
+api.add_resource(CorrelationDirect, '/correlation_live')
 
 if __name__ == "__main__":
     app.run()

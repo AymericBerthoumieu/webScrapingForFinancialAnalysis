@@ -15,10 +15,10 @@ class YahooScraper(Scraper):
 
     def get_prices(self, ticker: str, start_date: dt.datetime, end_date: dt.datetime):
         """
-        :param ticker:
-        :param start_date:
-        :param end_date:
-        :return:
+        :param ticker: ticker of the asset
+        :param start_date: begin of the period
+        :param end_date: end of the period
+        :return: prices of the asset
         """
         # load historical data page
         self.connection(self._URL.format(ticker, ticker))

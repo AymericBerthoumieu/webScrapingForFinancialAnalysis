@@ -121,9 +121,6 @@ def pipeline_from_csv(path=PATH_TO_OLD_POSTS):
     """
     :return: sentiment correlation
     """
-    end_date = dt.datetime.now()
-    start_date = end_date - relativedelta.relativedelta(months=1)
-
     # get reference levels
     levels = pd.read_csv(PATH_TO_LEVELS, index_col=0)
     levels.index = pd.to_datetime(levels.index)
@@ -161,6 +158,7 @@ def full_load_to_csv(reference: str, influencers: Iterable, start_date: dt.datet
 
     # levels
     levels = load_yahoo_level(reference, start_date, end_date)
+    levels.to_csv(PATH_TO_LEVELS)
 
     # reddit
     posts = load_reddit_posts(influencers, start_date, end_date)
@@ -172,6 +170,7 @@ def full_load_to_csv(reference: str, influencers: Iterable, start_date: dt.datet
 
     full_data = pd.concat((posts, tweets))
     full_data.to_csv(PATH_TO_FULL_DATA)
+    return full_data, levels
 
 
 if __name__ == '__main__':

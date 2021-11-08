@@ -1,6 +1,5 @@
 from Scrapers.abbreviations_scraper import AbbreviationsScraper
 from Utils.const import DICT_SMILEY, WORDS_TO_KEEP
-from Utils.decorators import time_elapsed
 from nltk.corpus import stopwords, wordnet
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
@@ -116,8 +115,8 @@ class DataCleaner:
 
     def lemmatize_sentence(self, sentence: str):
         """
-        :param sentence: sentence that has to be lemmatize
-        :return:
+        :param sentence: sentence that has to be lemmatized
+        :return: lemmatized text
         """
         token_words = word_tokenize(sentence)
         lemmatized_sentence = []

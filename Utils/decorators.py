@@ -1,4 +1,8 @@
 def time_elapsed(fn):
+    """
+    :param fn: function to time
+    times the function
+    """
     from time import perf_counter
 
     def inner(*args, **kwargs):
