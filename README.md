@@ -54,5 +54,6 @@ positive or negative words.
 
 In this file, the class implemented is responsible to compute the sign and pearson correlation of the daily sentiment 
 and the returns.
-The pearson correlation is define by : $\rho = \frac{cov(a,b)}{\sigma_a \sigma_b}$
+The pearson correlation is define by : <a href="https://www.codecogs.com/eqnedit.php?latex=\rho&space;=&space;\frac{cov(a,b)}{\sigma_a&space;\sigma_b}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\rho&space;=&space;\frac{cov(a,b)}{\sigma_a&space;\sigma_b}" title="\rho = \frac{cov(a,b)}{\sigma_a \sigma_b}" /></a>
+
 
