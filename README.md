@@ -1,6 +1,7 @@
 # Web Scraping for Financial Analysis
 Project for the course "Python programming for Finance" at Master 203 at Université Paris Dauphine - PSL
-
+<br>
+All the packages used are in `requirement.txt`.
 ## Introduction
 The idea of this project is to check if the sentiment on social networks is correlated with the returns on the markets.
 To do so, we load posts from Reddit and Twitter that contains the different tickers that could influence the reference.
