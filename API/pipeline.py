@@ -114,7 +114,7 @@ def pipeline_direct(reference: str, influencers: Iterable):
     corr_analyser.set_correlation_method('pearson')
     correlation_pearson = corr_analyser.run(posts, levels).iloc[0, 1]  # only takes one factor
 
-    return correlation_pearson, correlation_sign
+    return correlation_pearson, correlation_sign, posts, levels
 
 
 def pipeline_from_csv(path=PATH_TO_OLD_POSTS):
@@ -143,7 +143,7 @@ def pipeline_from_csv(path=PATH_TO_OLD_POSTS):
     corr_analyser.set_correlation_method('pearson')
     correlation_pearson = corr_analyser.run(posts, levels).iloc[0, 1]  # only takes one factor
 
-    return correlation_pearson, correlation_sign
+    return correlation_pearson, correlation_sign, posts, levels
 
 
 def full_load_to_csv(reference: str, influencers: Iterable, start_date: dt.datetime, end_date: dt.datetime):

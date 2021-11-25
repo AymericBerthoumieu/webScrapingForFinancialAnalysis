@@ -7,11 +7,15 @@ class Correlation(Resource):
 
     def get(self):
 
-        corr_pearson, corr_sign = pipeline_from_csv()
+        corr_pearson, corr_sign, posts, levels = pipeline_from_csv()
+        levels.index = levels.index.astype(str)
+        posts.index = posts.index.astype(str)
 
         dict_return = {
             "sign_correlation": corr_sign,
-            "pearson_correlation": corr_pearson
+            "pearson_correlation": corr_pearson,
+            "posts": posts.to_dict(),
+            "levels": levels.to_dict()
         }
         return dict_return, 200
 
@@ -26,11 +30,15 @@ class CorrelationDirect(Resource):
 
         args = parser.parse_args()
 
-        corr_pearson, corr_sign = pipeline_direct(args['ticker'], args['influencers'].split(','))
+        corr_pearson, corr_sign, posts, levels = pipeline_direct(args['ticker'], args['influencers'].split(','))
+        levels.index = levels.index.astype(str)
+        posts.index = posts.index.astype(str)
 
         dict_return = {
             "sign_correlation": corr_sign,
-            "pearson_correlation": corr_pearson
+            "pearson_correlation": corr_pearson,
+            "posts": posts.to_dict(),
+            "levels": levels.to_dict()
         }
         return dict_return, 200
 
