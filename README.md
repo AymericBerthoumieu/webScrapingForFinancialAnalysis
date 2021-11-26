@@ -57,13 +57,26 @@ positive or negative words.
 
 In this file, the class implemented is responsible to compute the sign and pearson correlation of the daily sentiment 
 and the returns. The issue with the pearson correlation is that the sentiment score is not well normalized/scaled thus it
-does not have a lot of sens while the interpretation of the sign correlation is intuitive.<br>
+does not have a lot of sens while the interpretation of the sign correlation is more intuitive intuitive.<br>
 The pearson correlation is define by : <br>
 <a href="https://www.codecogs.com/eqnedit.php?latex=\rho&space;=&space;\frac{cov(a,b)}{\sigma_a&space;\sigma_b}" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\rho&space;=&space;\frac{cov(a,b)}{\sigma_a&space;\sigma_b}" title="\rho = \frac{cov(a,b)}{\sigma_a \sigma_b}" /></a>
 <br>
 The sign correlation is define as : <br>
 <a href="https://www.codecogs.com/eqnedit.php?latex=\rho&space;=&space;\frac{1}{N}\sum_{i=1}^{N}sign(a_i)&space;\times&space;sign(b_i)" target="_blank"><img src="https://latex.codecogs.com/gif.latex?\rho&space;=&space;\frac{1}{N}\sum_{i=1}^{N}sign(a_i)&space;\times&space;sign(b_i)" title="\rho = \frac{1}{N}\sum_{i=1}^{N}sign(a_i) \times sign(b_i)" /></a>
 <br>
+
+As the results change depending on which day the computation are ran, I can not analyse one results. 
+However, I can explain the different results you can possibly obtain :
+- If the sign correlation is positive, it means that the sentiment of reddit on the "influencers" could give an insight 
+of how the reference index will perform the next day. For example, if thy are expressing bad sentiment, one could expect 
+a negative performance.
+- If the sign correlation is negative, it means that the sentiment of reddit on the "influencers" could also give an 
+insight of how the reference index will perform the next day. But this time, is the sentiment is negative, a positive
+performance is expected the next day.
+- Finally, if the sign correlation is zero, it could mean that reddit posts have no predictive power.
+
+From the different tests I ran during the implementation of this project it seems that the NASDAQ Composite index is usually
+positively correlated with the sentiment of reddit on the GAFAM (so refer to case 1). <br>
 
 ### Directory : `Scrapers`
 #### File : `abbreviation_scraper.py`
